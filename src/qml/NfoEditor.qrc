@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>NfoEditor.qml</file>
+        <file>LabeledInput.qml</file>
+        <file>SuggestionBox.qml</file>
+        <file>SuggestionItem.qml</file>
+        <file>SuggestionPanel.qml</file>
+    </qresource>
+</RCC>
