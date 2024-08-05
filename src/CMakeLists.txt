@@ -13,6 +13,7 @@ qt_add_executable(nfo-editor
     qml/NfoEditor.qrc
     NfoEditorAutocomplete.cpp
     NfoEditorQtBridge.cpp
+    NfoEditorUtils.cpp
 )
 
 target_include_directories(nfo-editor PRIVATE .)

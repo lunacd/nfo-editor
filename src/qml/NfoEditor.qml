@@ -26,12 +26,16 @@ ApplicationWindow
             LabeledInput {
                 label: "Title"
                 Layout.fillWidth: true
+
+                autocomplete: false
             }
 
             LabeledInput {
                 label: "Studio"
-                width: parent.width
                 Layout.fillWidth: true
+
+                autocomplete: true
+                completionSource: "actor"
             }
         }
     }

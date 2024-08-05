@@ -1,7 +1,7 @@
 {
   "name": "nfo-editor",
   "version-string": "1.0.0",
-  "builtin-baseline": "cacf5994341f27e9a14a7b8724b0634b138ecb30",
+  "builtin-baseline": "fe1cde61e971d53c9687cf9a46308f8f55da19fa",
   "dependencies": [
     {
       "name": "fmt"

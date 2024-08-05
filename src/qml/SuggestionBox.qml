@@ -2,6 +2,10 @@ import QtQuick
 import QtQuick.Controls
 
 Item {
+    required property bool autocomplete
+    property string completionSource
+    property alias text: textInput.text
+
     id: suggestionBox
     height: rectangle.height
 
@@ -15,6 +19,7 @@ Item {
         anchors.right: parent.right
         anchors.top: parent.top
         height: 24
+
 
         TextInput {
             id: textInput
@@ -45,9 +50,16 @@ Item {
             }
 
             SuggestionPanel {
+                function getCompletion(prefix) {
+                    if (!autocomplete || prefix.length <= 1) {
+                        return []
+                    }
+                    return bridge.autocomplete(completionSource, prefix)
+                }
+
                 id: suggestionPanel
                 anchors.fill: parent
-                model: bridge.autocomplete("b")
+                model: getCompletion(textInput.text)
             }
         }
 
