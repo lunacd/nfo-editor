@@ -1,5 +1,7 @@
 #pragma once
 
+#include <marisa/key.h>
+#include <marisa/keyset.h>
 #include <memory>
 #include <string>
 #include <string_view>
@@ -15,6 +17,7 @@ class Autocomplete {
 public:
   struct CompletionData {
     marisa::Trie trie;
+    marisa::Keyset keyset;
     std::unordered_map<std::string, std::unordered_set<std::string>>
         originalStrings;
   };
@@ -27,6 +30,8 @@ public:
     [[nodiscard]] std::vector<std::string>
     complete(std::string_view prefix) const;
 
+    void addCandidate(const std::string &candidate);
+
   private:
     std::shared_ptr<CompletionData> m_completionData;
   };
@@ -36,6 +41,8 @@ public:
   void registerCompletionSource(const std::string &completionSource);
 
   Completer getCompleter(const std::string &completionSource);
+
+  void exportCompletionData() const;
 
 private:
   std::unordered_map<std::string, std::shared_ptr<CompletionData>>
