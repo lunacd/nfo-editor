@@ -1,6 +1,8 @@
 #include <NfoEditorUtils.hpp>
 
+#include <algorithm>
 #include <cstdlib>
+#include <iterator>
 #include <mutex>
 #include <string_view>
 
@@ -39,6 +41,13 @@ std::string_view trim(std::string_view input) {
                     std::find_if(input.crbegin(), input.crend(), isNotSpace));
   input.remove_suffix(suffixLength);
   return input;
+}
+
+std::string toLower(std::string_view input) {
+  std::string result;
+  std::transform(input.begin(), input.end(), std::back_inserter(result),
+                 [](unsigned char ch) { return std::tolower(ch); });
+  return result;
 }
 
 } // namespace NfoEditor
