@@ -5,6 +5,9 @@
   "dependencies": [
     {
       "name": "fmt"
+    },
+    {
+      "name": "marisa-trie"
     }
   ]
 }

@@ -11,14 +11,18 @@ find_package(Qt6 REQUIRED COMPONENTS Core Qml Quick Widgets)
 qt_add_executable(nfo-editor
     NfoEditor.cpp
     qml/NfoEditor.qrc
+    NfoEditorAutocomplete.cpp
+    NfoEditorQtBridge.cpp
 )
 
-#target_sources(nfo-editor PRIVATE FILE_SET HEADERS FILES
-#    nfo_editor_metadata.h
-#)
+target_include_directories(nfo-editor PRIVATE .)
 
 find_package(fmt CONFIG REQUIRED)
 target_link_libraries(nfo-editor PRIVATE fmt::fmt)
+
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(marisa REQUIRED IMPORTED_TARGET marisa)
+target_link_libraries(nfo-editor PRIVATE PkgConfig::marisa)
 
 target_link_libraries(nfo-editor PRIVATE Qt6::Qml Qt6::Quick Qt6::Widgets)
 

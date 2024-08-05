@@ -39,9 +39,15 @@ Item {
 
             closePolicy: Popup.NoAutoClose
 
+            background: Rectangle {
+                anchors.fill: parent
+                color: "white"
+            }
+
             SuggestionPanel {
                 id: suggestionPanel
                 anchors.fill: parent
+                model: bridge.autocomplete("b")
             }
         }
 

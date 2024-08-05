@@ -1,17 +1,27 @@
 import QtQuick
+import QtQuick.Layouts
 
 Item {
     id: suggestionPanel
-    height: suggestionItem.height
+    height: columnLayout.height
 
     property alias model: repeater.model
 
-    SuggestionItem {
-        id: suggestionItem
-        text: "test suggestion"
+    ColumnLayout {
+        id: columnLayout
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.leftMargin: 0
-        anchors.rightMargin: 0
+
+        Repeater {
+            id: repeater
+
+            SuggestionItem {
+                required property string modelData
+
+                id: suggestionItem
+                text: modelData
+                Layout.fillWidth: true
+            }
+        }
     }
 }

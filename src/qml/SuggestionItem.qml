@@ -6,7 +6,6 @@ Item {
     height: text.height
 
     Rectangle {
-        id: defaultBackground
         anchors.fill: parent
         color: "white"
     }
