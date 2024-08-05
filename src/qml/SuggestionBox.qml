@@ -8,6 +8,11 @@ Item {
 
     id: suggestionBox
     height: rectangle.height
+    Component.onCompleted: () => {
+        if (autocomplete) {
+            bridge.registerCompletionSource(completionSource);
+        }
+    }
 
     Rectangle {
         id: rectangle
