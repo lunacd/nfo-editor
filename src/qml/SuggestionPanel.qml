@@ -2,15 +2,18 @@ import QtQuick
 import QtQuick.Layouts
 
 Item {
+    property alias model: repeater.model
+
+    signal fill(text: string)
+
     id: suggestionPanel
     height: columnLayout.height
-
-    property alias model: repeater.model
 
     ColumnLayout {
         id: columnLayout
         anchors.left: parent.left
         anchors.right: parent.right
+        spacing: 0
 
         Repeater {
             id: repeater
@@ -21,6 +24,8 @@ Item {
                 id: suggestionItem
                 text: modelData
                 Layout.fillWidth: true
+
+                onClicked: () => suggestionPanel.fill(modelData)
             }
         }
     }

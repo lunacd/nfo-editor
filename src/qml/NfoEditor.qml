@@ -21,7 +21,7 @@ ApplicationWindow
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.margins: 8
-            spacing: 0
+            spacing: 8
 
             LabeledInput {
                 label: "Title"

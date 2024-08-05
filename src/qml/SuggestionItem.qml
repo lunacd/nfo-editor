@@ -1,6 +1,8 @@
 import QtQuick
 
 Item {
+    signal clicked()
+
     id: suggestionItem
     property alias text: text.text
     height: text.height
@@ -18,6 +20,7 @@ Item {
 
     Text {
         id: text
+        padding: 6
     }
 
     MouseArea {

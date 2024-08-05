@@ -20,7 +20,6 @@ Item {
         anchors.top: parent.top
         height: 24
 
-
         TextInput {
             id: textInput
             anchors.left: parent.left
@@ -28,6 +27,8 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             anchors.leftMargin: 4
             anchors.rightMargin: 4
+
+            onTextEdited: () => suggestionPopup.open()
         }
 
         Popup {
@@ -60,9 +61,11 @@ Item {
                 id: suggestionPanel
                 anchors.fill: parent
                 model: getCompletion(textInput.text)
+                onFill: (text) => {
+                    textInput.text = text;
+                    suggestionPopup.close();
+                }
             }
         }
-
-        Component.onCompleted: () => suggestionPopup.open()
     }
 }
