@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Layouts
 
 Item {
     property alias text: suggestionBox.text
@@ -19,7 +18,7 @@ Item {
         anchors.top: label.bottom
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.topMargin: 3
+        anchors.topMargin: 4
 
         autocomplete: labeledInput.autocomplete
         completionSource: labeledInput.completionSource

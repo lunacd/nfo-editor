@@ -35,6 +35,14 @@ ApplicationWindow
                 Layout.fillWidth: true
 
                 autocomplete: true
+                completionSource: "studio"
+            }
+
+            LabeledListInput {
+                label: "Actors"
+                Layout.fillWidth: true
+
+                autocomplete: true
                 completionSource: "actor"
             }
         }

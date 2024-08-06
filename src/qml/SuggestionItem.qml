@@ -9,13 +9,7 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: "white"
-    }
-
-    Rectangle {
-        anchors.fill: parent
-        color: "#f0f0f0"
-        visible: mouseArea.containsMouse
+        color: mouseArea.containsMouse ? "#f0f0f0" : "white"
     }
 
     Text {
