@@ -45,6 +45,14 @@ ApplicationWindow
                 autocomplete: true
                 completionSource: "actor"
             }
+
+            LabeledListInput {
+                label: "Tags"
+                Layout.fillWidth: true
+
+                autocomplete: true
+                completionSource: "tag"
+            }
         }
     }
 }

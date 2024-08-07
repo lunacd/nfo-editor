@@ -10,19 +10,21 @@ Item {
     property list<string> items: []
 
     id: labeledInput
-    height: label.height + suggestionBox.height + suggestionBox.anchors.topMargin
+    height: label.height + column.height + column.anchors.topMargin
 
     Text {
         id: label
     }
 
     ColumnLayout {
+        id: column
         anchors.top: label.bottom
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.topMargin: 4
 
         RowLayout {
+            id: row
             spacing: 4
             Layout.fillWidth: true
 
@@ -45,6 +47,7 @@ Item {
         }
 
         Flow {
+            id: flow
             spacing: 4
             Layout.fillWidth: true
 
