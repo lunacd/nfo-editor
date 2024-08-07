@@ -7,6 +7,7 @@ Item {
     property alias label: label.text
     required property bool autocomplete
     property string completionSource
+    property list<string> items: []
 
     id: labeledInput
     height: label.height + suggestionBox.height + suggestionBox.anchors.topMargin
@@ -36,6 +37,10 @@ Item {
 
             CustomButton {
                 // text: "+"
+                onClicked: () => {
+                    items.push(suggestionBox.text);
+                    suggestionBox.text = "";
+                }
             }
         }
 
@@ -43,8 +48,15 @@ Item {
             spacing: 4
             Layout.fillWidth: true
 
-            RemovableItem {
-                text:  "abc"
+            Repeater {
+                model: items
+
+                RemovableItem {
+                    required property string modelData
+                    required property int index
+                    text: modelData
+                    onRemoved: () => { items.splice(index, 1) }
+                }
             }
         }
     }

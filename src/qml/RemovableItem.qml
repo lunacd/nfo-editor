@@ -56,6 +56,7 @@ Item {
             hoverEnabled: true
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
+            onClicked: () => { removed() }
         }
     }
 }
