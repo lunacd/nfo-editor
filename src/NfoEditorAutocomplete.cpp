@@ -61,6 +61,7 @@ Autocomplete::buildCompletionData(const std::string &completionSource) {
   // Check $XDG_DATA_HOME/nfo-editor/autocomplete/<source>.txt for completions
   const auto completionFilePath = getCompletionFilePath(completionSource);
   if (!std::filesystem::exists(completionFilePath)) {
+    completionData->trie.build(completionData->keyset);
     return completionData;
   }
 
