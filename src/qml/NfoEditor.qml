@@ -24,6 +24,8 @@ ApplicationWindow
             spacing: 8
 
             LabeledInput {
+                id: title
+                
                 label: "Title"
                 Layout.fillWidth: true
 
@@ -31,6 +33,8 @@ ApplicationWindow
             }
 
             LabeledInput {
+                id: studio
+
                 label: "Studio"
                 Layout.fillWidth: true
 
@@ -39,6 +43,8 @@ ApplicationWindow
             }
 
             LabeledListInput {
+                id: actors
+
                 label: "Actors"
                 Layout.fillWidth: true
 
@@ -47,11 +53,33 @@ ApplicationWindow
             }
 
             LabeledListInput {
+                id: tags
+
                 label: "Tags"
                 Layout.fillWidth: true
 
                 autocomplete: true
                 completionSource: "tag"
+            }
+
+            RowLayout {
+                Layout.alignment: Qt.AlignRight
+
+                CustomButton {
+                    text: "Clear"
+                    onClicked: () => {
+                        title.text = ""
+                        studio.text = ""
+                        actors.items = []
+                        actors.text = ""
+                        tags.items = []
+                        tags.text = ""
+                    }
+                }
+
+                CustomButton {
+                    text: "Save"
+                }
             }
         }
     }
