@@ -1,14 +1,22 @@
 import QtQuick
+import QtQuick.Layouts
 
 Item {
     id: button
 
-    // property alias text: text.text
+    property alias text: text.text
+    property alias icon: icon.source
 
     signal clicked()
 
-    implicitWidth: 24
-    implicitHeight: 24
+    QtObject {
+        id: internal
+        readonly property int padding: 4
+        readonly property int itemSize: 16
+    }
+
+    implicitWidth: Math.max(internal.itemSize + 2 * internal.padding, row.width)
+    implicitHeight: internal.itemSize + 2 * internal.padding
 
     Rectangle {
         anchors.fill: parent
@@ -18,12 +26,35 @@ Item {
         radius: 4
     }
 
-    Image {
-        source: "icons/plus.svg"
-        width: 16
-        height: 16
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
+    RowLayout {
+        id: row
+        spacing: 2
+
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+
+        // Using rectangles for padding for the lack of horizontal anchors
+        Rectangle {
+            width: internal.padding
+        }
+
+        Image {
+            id: icon
+            sourceSize: Qt.size(internal.itemSize, internal.itemSize)
+            width: internal.itemSize
+            height: internal.itemSize
+            Layout.alignment: Qt.AlignVCenter
+            visible: this.source.toString() !== ""
+        }
+
+        Text {
+            id: text
+            visible: this.text !== ""
+        }
+
+        Rectangle {
+            width: internal.padding
+        }
     }
 
     MouseArea {

@@ -38,7 +38,7 @@ Item {
             }
 
             CustomButton {
-                // text: "+"
+                icon: "icons/plus.svg"
                 onClicked: () => {
                     items.push(suggestionBox.text);
                     suggestionBox.text = "";
