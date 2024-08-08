@@ -9,8 +9,8 @@ Item {
     property string completionSource
     property list<string> items: []
 
-    id: labeledInput
-    height: label.height + column.height + column.anchors.topMargin
+    id: labeledListInput
+    implicitHeight: label.height + column.height + column.anchors.topMargin
 
     Text {
         id: label
@@ -33,8 +33,8 @@ Item {
 
                 Layout.fillWidth: true
 
-                autocomplete: labeledInput.autocomplete
-                completionSource: labeledInput.completionSource
+                autocomplete: labeledListInput.autocomplete
+                completionSource: labeledListInput.completionSource
             }
 
             CustomButton {
