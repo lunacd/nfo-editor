@@ -99,7 +99,18 @@ ApplicationWindow
         folder: StandardPaths.standardLocations(StandardPaths.HomeLocation)[0]
         fileMode: FileDialog.SaveFile
         onAccepted: () => {
-            bridge.saveToXml(currentFile, title.text.trim(), studio.text.trim(), actors.items, tags.items)
+            bridge.saveToXml(currentFile, title.text.trim(), studio.text.trim(), actors.items, tags.items);
+
+            // Save completion to file
+            bridge.addCompletionCandidate("studio", studio.text.trim());
+            for (let actor of actors.items) {
+                bridge.addCompletionCandidate("actor", actor);
+            }
+            for (let tag of tags.items) {
+                bridge.addCompletionCandidate("tag", tag);
+            } 
+            bridge.exportCompletionData();
+
             window.clearFields();
         }
     }

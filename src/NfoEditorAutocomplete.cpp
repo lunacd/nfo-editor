@@ -29,7 +29,11 @@ void exportCompletionToFile(
     const std::unordered_map<std::string, std::unordered_set<std::string>>
         &originalStrings) {
   const auto completionFilePath = getCompletionFilePath(completionSource);
+  if (!std::filesystem::exists(completionFilePath.parent_path())) {
+    std::filesystem::create_directories(completionFilePath.parent_path());
+  }
   std::ofstream completionFile{completionFilePath};
+
   for (const auto &stringPairs : originalStrings) {
     for (const auto &line : stringPairs.second) {
       completionFile << line << "\n";
