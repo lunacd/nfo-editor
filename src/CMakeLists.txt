@@ -14,6 +14,7 @@ qt_add_executable(nfo-editor
     NfoEditorAutocomplete.cpp
     NfoEditorQtBridge.cpp
     NfoEditorUtils.cpp
+    NfoEditorXml.cpp
 )
 
 target_include_directories(nfo-editor PRIVATE .)
@@ -24,6 +25,9 @@ target_link_libraries(nfo-editor PRIVATE fmt::fmt)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(marisa REQUIRED IMPORTED_TARGET marisa)
 target_link_libraries(nfo-editor PRIVATE PkgConfig::marisa)
+
+find_package(pugixml CONFIG REQUIRED)
+target_link_libraries(nfo-editor PRIVATE pugixml::pugixml)
 
 target_link_libraries(nfo-editor PRIVATE Qt6::Qml Qt6::Quick Qt6::Widgets)
 

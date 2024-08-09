@@ -13,8 +13,12 @@ public:
   Q_INVOKABLE QList<QString> autocomplete(const QString &completionSource,
                                           const QString &prefix);
   Q_INVOKABLE void addCompletionCandidate(const QString &completionSource,
-                                const QString &candidate);
+                                          const QString &candidate);
   Q_INVOKABLE void exportCompletionData();
+  Q_INVOKABLE static void saveToXml(const QUrl &filePath,
+                                    const QString &title, const QString &studio,
+                                    const QList<QString> &actors,
+                                    const QList<QString> &tags);
 
 private:
   Autocomplete m_autocomplete;

@@ -8,6 +8,9 @@
     },
     {
       "name": "marisa-trie"
+    },
+    {
+      "name": "pugixml"
     }
   ]
 }

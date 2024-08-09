@@ -1,6 +1,12 @@
 #include <NfoEditorQtBridge.hpp>
 
 #include <NfoEditorUtils.hpp>
+#include <NfoEditorXml.hpp>
+
+#include <algorithm>
+#include <iterator>
+
+#include <QUrl>
 
 namespace NfoEditor {
 void QtBridge::registerCompletionSource(const QString &completionSource) {
@@ -30,4 +36,24 @@ void QtBridge::addCompletionCandidate(const QString &completionSource,
 }
 
 void QtBridge::exportCompletionData() { m_autocomplete.exportCompletionData(); }
+
+void QtBridge::saveToXml(const QUrl &filePath, const QString &title,
+                         const QString &studio, const QList<QString> &actors,
+                         const QList<QString> &tags) {
+  static const auto qStringToStd = [](const auto &actor) {
+    return actor.toStdString();
+  };
+
+  std::vector<std::string> stdActors;
+  stdActors.reserve(actors.size());
+  std::vector<std::string> stdTags;
+  stdTags.reserve(tags.size());
+  std::transform(actors.begin(), actors.end(), std::back_inserter(stdActors),
+                 qStringToStd);
+  std::transform(tags.begin(), tags.end(), std::back_inserter(stdTags),
+                 qStringToStd);
+
+  NfoData data{title.toStdString(), studio.toStdString(), stdActors, stdTags};
+  data.saveToFile(filePath.path().toStdString());
+}
 } // namespace NfoEditor

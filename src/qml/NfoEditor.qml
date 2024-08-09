@@ -1,6 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import QtQuick.Dialogs
+import Qt.labs.platform
 
 ApplicationWindow
 {
@@ -9,6 +11,15 @@ ApplicationWindow
     width: 640
     height: 480
     title: qsTr("NFO Editor")
+
+    function clearFields() {
+        title.text = ""
+        studio.text = ""
+        actors.items = []
+        actors.text = ""
+        tags.items = []
+        tags.text = ""
+    }
 
     Rectangle {
         id: page
@@ -68,19 +79,28 @@ ApplicationWindow
                 CustomButton {
                     text: "Clear"
                     onClicked: () => {
-                        title.text = ""
-                        studio.text = ""
-                        actors.items = []
-                        actors.text = ""
-                        tags.items = []
-                        tags.text = ""
+                        window.clearFields();
                     }
                 }
 
                 CustomButton {
                     text: "Save"
+                    onClicked: () => {
+                        fileDialog.visible = true;
+                    }
                 }
             }
+        }
+    }
+
+    FileDialog {
+        id: fileDialog
+        title: "Please choose where to save to"
+        folder: StandardPaths.standardLocations(StandardPaths.HomeLocation)[0]
+        fileMode: FileDialog.SaveFile
+        onAccepted: () => {
+            bridge.saveToXml(currentFile, title.text, studio.text, actors.items, tags.items)
+            window.clearFields();
         }
     }
 }
