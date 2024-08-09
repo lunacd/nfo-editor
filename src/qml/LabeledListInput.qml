@@ -12,6 +12,11 @@ Item {
     id: labeledListInput
     implicitHeight: label.height + column.height + column.anchors.topMargin
 
+    function addItem() {
+        items.push(suggestionBox.text.trim());
+        suggestionBox.text = "";
+    }
+
     Text {
         id: label
     }
@@ -35,14 +40,13 @@ Item {
 
                 autocomplete: labeledListInput.autocomplete
                 completionSource: labeledListInput.completionSource
+
+                onAccepted: () => addItem()
             }
 
             CustomButton {
                 icon: "icons/plus.svg"
-                onClicked: () => {
-                    items.push(suggestionBox.text.trim());
-                    suggestionBox.text = "";
-                }
+                onClicked: () => addItem()
             }
         }
 

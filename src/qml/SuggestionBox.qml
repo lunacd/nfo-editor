@@ -6,6 +6,8 @@ Item {
     property string completionSource
     property alias text: textInput.text
 
+    signal accepted()
+
     id: suggestionBox
     height: rectangle.height
     Component.onCompleted: () => {
@@ -34,6 +36,7 @@ Item {
             anchors.rightMargin: 4
 
             onTextEdited: () => suggestionPopup.open()
+            onAccepted: () => suggestionBox.accepted()
         }
 
         Popup {
