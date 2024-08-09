@@ -40,7 +40,7 @@ Item {
             CustomButton {
                 icon: "icons/plus.svg"
                 onClicked: () => {
-                    items.push(suggestionBox.text);
+                    items.push(suggestionBox.text.trim());
                     suggestionBox.text = "";
                 }
             }

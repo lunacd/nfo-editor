@@ -99,7 +99,7 @@ ApplicationWindow
         folder: StandardPaths.standardLocations(StandardPaths.HomeLocation)[0]
         fileMode: FileDialog.SaveFile
         onAccepted: () => {
-            bridge.saveToXml(currentFile, title.text, studio.text, actors.items, tags.items)
+            bridge.saveToXml(currentFile, title.text.trim(), studio.text.trim(), actors.items, tags.items)
             window.clearFields();
         }
     }
