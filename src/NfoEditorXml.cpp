@@ -25,6 +25,12 @@ void NfoData::saveToFile(const std::filesystem::path &path) const {
     tagNode.append_child(pugi::node_pcdata).set_value(tag.c_str());
   }
 
-  doc.save_file(path.c_str());
+  // If the given path has no extension, give it .nfo extension
+  // If the given path has another extension, replace it with .nfo
+  // This is useful for generating nfo files for another existing file.
+  auto pathToSave = path;
+  pathToSave.replace_extension("nfo");
+
+  doc.save_file(pathToSave.c_str());
 }
 } // namespace NfoEditor
