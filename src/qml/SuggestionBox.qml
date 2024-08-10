@@ -86,15 +86,10 @@ FocusScope {
             Keys.onUpPressed: (event) => {
                 suggestionBox.previousSuggestion()
             }
-            Keys.onTabPressed: (event) => {
-                suggestionBox.acceptSuggestion()
-            }
 
             onTextEdited: () => suggestionPopup.open()
             onAccepted: () => {
-                if (suggestionPanel.selectedIndex !== undefined) {
-                    suggestionBox.acceptSuggestion();
-                }
+                suggestionBox.acceptSuggestion();
                 suggestionBox.accepted();
             }
         }
