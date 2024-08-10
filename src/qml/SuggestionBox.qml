@@ -45,11 +45,8 @@ FocusScope {
     }
 
     function acceptSuggestion() {
-        if (suggestionPanel.model.length === 0) {
-            return;
-        }
         if (suggestionPanel.selectedIndex === undefined) {
-            suggestionPanel.selectedIndex = 0;
+            return;
         }
         textInput.text = suggestionPanel.model[suggestionPanel.selectedIndex];
         closeSuggestion();
