@@ -1,15 +1,17 @@
 import QtQuick
 
 Item {
+    property alias text: text.text
+    property bool selected: false
+
     signal clicked()
 
     id: suggestionItem
-    property alias text: text.text
     height: text.height
 
     Rectangle {
         anchors.fill: parent
-        color: mouseArea.containsMouse ? "#f0f0f0" : "white"
+        color: (mouseArea.containsMouse || selected) ? "#f0f0f0" : "white"
     }
 
     Text {

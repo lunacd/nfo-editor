@@ -2,13 +2,14 @@ import QtQuick
 import QtQuick.Controls
 
 FocusScope {
+    id: suggestionBox
+
     required property bool autocomplete
     property string completionSource
     property alias text: textInput.text
 
     signal accepted()
 
-    id: suggestionBox
     x: rectangle.x
     y: rectangle.y
     width: rectangle.width
@@ -17,6 +18,46 @@ FocusScope {
         if (autocomplete) {
             bridge.registerCompletionSource(completionSource);
         }
+    }
+    
+    function nextSuggestion() {
+        if (suggestionPanel.model.length === 0) {
+            suggestionPanel.selectedIndex = undefined;
+        }
+        if (suggestionPanel.selectedIndex === undefined) {
+            suggestionPanel.selectedIndex = 0;
+        } else {
+            suggestionPanel.selectedIndex += 1;
+        }
+        suggestionPanel.selectedIndex %= suggestionPanel.model.length;
+    }
+
+    function previousSuggestion() {
+        if (suggestionPanel.model.length === 0) {
+            suggestionPanel.selectedIndex = undefined;
+        }
+        if (suggestionPanel.selectedIndex === undefined) {
+            suggestionPanel.selectedIndex = suggestionBox.model.length - 1;
+        } else {
+            suggestionPanel.selectedIndex -= 1;
+        }
+        suggestionPanel.selectedIndex %= suggestionPanel.model.length;
+    }
+
+    function acceptSuggestion() {
+        if (suggestionPanel.model.length === 0) {
+            return;
+        }
+        if (suggestionPanel.selectedIndex === undefined) {
+            suggestionPanel.selectedIndex = 0;
+        }
+        textInput.text = suggestionPanel.model[suggestionPanel.selectedIndex];
+        closeSuggestion();
+    }
+
+    function closeSuggestion() {
+        suggestionPanel.selectedIndex = undefined;
+        suggestionPopup.close();
     }
 
     Rectangle {
@@ -39,8 +80,23 @@ FocusScope {
             anchors.rightMargin: 4
             focus: true
 
+            Keys.onDownPressed: (event) => {
+                suggestionBox.nextSuggestion()
+            }
+            Keys.onUpPressed: (event) => {
+                suggestionBox.previousSuggestion()
+            }
+            Keys.onTabPressed: (event) => {
+                suggestionBox.acceptSuggestion()
+            }
+
             onTextEdited: () => suggestionPopup.open()
-            onAccepted: () => suggestionBox.accepted()
+            onAccepted: () => {
+                if (suggestionPanel.selectedIndex !== undefined) {
+                    suggestionBox.acceptSuggestion();
+                }
+                suggestionBox.accepted();
+            }
         }
 
         Popup {
@@ -75,7 +131,7 @@ FocusScope {
                 model: getCompletion(textInput.text)
                 onFill: (text) => {
                     textInput.text = text;
-                    suggestionPopup.close();
+                    suggestionBox.closeSuggestion();
                 }
             }
         }
