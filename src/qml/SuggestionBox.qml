@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 
-Item {
+FocusScope {
     required property bool autocomplete
     property string completionSource
     property alias text: textInput.text
@@ -9,6 +9,9 @@ Item {
     signal accepted()
 
     id: suggestionBox
+    x: rectangle.x
+    y: rectangle.y
+    width: rectangle.width
     height: rectangle.height
     Component.onCompleted: () => {
         if (autocomplete) {
@@ -34,6 +37,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             anchors.leftMargin: 4
             anchors.rightMargin: 4
+            focus: true
 
             onTextEdited: () => suggestionPopup.open()
             onAccepted: () => suggestionBox.accepted()

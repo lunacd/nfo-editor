@@ -39,6 +39,8 @@ ApplicationWindow
                 
                 label: "Title"
                 Layout.fillWidth: true
+                focus: true
+                KeyNavigation.tab: studio
 
                 autocomplete: false
             }
@@ -48,6 +50,7 @@ ApplicationWindow
 
                 label: "Studio"
                 Layout.fillWidth: true
+                KeyNavigation.tab: actors
 
                 autocomplete: true
                 completionSource: "studio"
@@ -58,6 +61,7 @@ ApplicationWindow
 
                 label: "Actors"
                 Layout.fillWidth: true
+                KeyNavigation.tab: tags
 
                 autocomplete: true
                 completionSource: "actor"

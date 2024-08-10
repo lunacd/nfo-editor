@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 
-Item {
+FocusScope {
     property alias text: suggestionBox.text
     property alias label: label.text
     required property bool autocomplete
@@ -40,6 +40,7 @@ Item {
 
                 autocomplete: labeledListInput.autocomplete
                 completionSource: labeledListInput.completionSource
+                focus: true
 
                 onAccepted: () => addItem()
             }

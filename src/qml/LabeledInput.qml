@@ -1,6 +1,6 @@
 import QtQuick
 
-Item {
+FocusScope {
     property alias text: suggestionBox.text
     property alias label: label.text
     required property bool autocomplete
@@ -19,6 +19,7 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.topMargin: 4
+        focus: true
 
         autocomplete: labeledInput.autocomplete
         completionSource: labeledInput.completionSource

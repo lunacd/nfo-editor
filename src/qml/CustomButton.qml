@@ -21,7 +21,7 @@ Item {
     Rectangle {
         anchors.fill: parent
         color: mouseArea.containsMouse ? "#f0f0f0" : "white"
-        border.color: "black"
+        border.color: button.focus ? "blue" : "black"
         border.width: 1
         radius: 4
     }
