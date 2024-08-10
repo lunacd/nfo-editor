@@ -92,6 +92,11 @@ FocusScope {
                 suggestionBox.acceptSuggestion();
                 suggestionBox.accepted();
             }
+            onActiveFocusChanged: () => {
+                if (!activeFocus) {
+                    suggestionPopup.close()
+                }
+            }
         }
 
         Popup {
