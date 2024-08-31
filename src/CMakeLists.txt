@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 find_package(Qt6 REQUIRED COMPONENTS Core Qml Quick Widgets)
 
-qt_add_executable(nfo-editor
+set(sources
     NfoEditor.cpp
     qml/NfoEditor.qrc
     NfoEditorAutocomplete.cpp
@@ -16,6 +16,17 @@ qt_add_executable(nfo-editor
     NfoEditorUtils.cpp
     NfoEditorXml.cpp
 )
+
+if (WIN32)
+    qt_add_executable(nfo-editor
+        WIN32
+        ${sources}
+    )
+else ()
+    qt_add_executable(nfo-editor
+        ${sources}
+    )
+endif ()
 
 target_include_directories(nfo-editor PRIVATE .)
 
