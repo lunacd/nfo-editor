@@ -33,9 +33,8 @@ target_include_directories(nfo-editor PRIVATE .)
 find_package(fmt CONFIG REQUIRED)
 target_link_libraries(nfo-editor PRIVATE fmt::fmt)
 
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(marisa REQUIRED IMPORTED_TARGET marisa)
-target_link_libraries(nfo-editor PRIVATE PkgConfig::marisa)
+find_package(marisa REQUIRED)
+target_link_libraries(nfo-editor PRIVATE marisa::marisa)
 
 find_package(pugixml CONFIG REQUIRED)
 target_link_libraries(nfo-editor PRIVATE pugixml::pugixml)
