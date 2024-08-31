@@ -13,7 +13,11 @@ FocusScope {
     implicitHeight: label.height + column.height + column.anchors.topMargin
 
     function addItem() {
-        items.push(suggestionBox.text.trim());
+        let trimmedText = suggestionBox.text.trim();
+        if (trimmedText.length === 0 || items.contains(trimmedText)) {
+            return;
+        }
+        items.push(trimmedText);
         suggestionBox.text = "";
     }
 
