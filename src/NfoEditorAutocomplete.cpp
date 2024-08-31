@@ -3,7 +3,6 @@
 
 #include <filesystem>
 #include <fstream>
-#include <iostream>
 #include <marisa/key.h>
 #include <memory>
 #include <string>
@@ -77,9 +76,9 @@ Autocomplete::buildCompletionData(const std::string &completionSource) {
     if (candidate.empty()) {
       continue;
     }
-    completionData->keyset.push_back(candidateLower);
-    const auto it = completionData->originalStrings.find(candidateLower);
-    if (it == completionData->originalStrings.end()) {
+    completionData->keyset.push_back(candidateLower.c_str());
+    if (const auto it = completionData->originalStrings.find(candidateLower);
+        it == completionData->originalStrings.end()) {
       completionData->originalStrings.emplace(candidateLower,
                                               std::unordered_set{candidate});
     } else {
@@ -92,15 +91,15 @@ Autocomplete::buildCompletionData(const std::string &completionSource) {
 }
 
 std::vector<std::string>
-Autocomplete::Completer::complete(std::string_view prefix) const {
+Autocomplete::Completer::complete(const std::string &prefix) const {
   marisa::Agent agent;
-  agent.set_query(prefix);
+  agent.set_query(prefix.c_str());
   std::vector<std::string> matches;
   matches.reserve(s_maxMatches);
 
   while (m_completionData->trie.predictive_search(agent) &&
          matches.size() < s_maxMatches) {
-    const auto match = agent.key().str();
+    const auto *const match = agent.key().ptr();
     const auto &originalStrings =
         m_completionData->originalStrings.at(std::string(match));
     matches.insert(matches.end(), originalStrings.begin(),
@@ -110,12 +109,12 @@ Autocomplete::Completer::complete(std::string_view prefix) const {
   return matches;
 }
 
-void Autocomplete::Completer::addCandidate(const std::string &candidate) {
+void Autocomplete::Completer::addCandidate(const std::string &candidate) const {
   const auto candidateLower = toLower(candidate);
-  m_completionData->keyset.push_back(candidateLower);
+  m_completionData->keyset.push_back(candidateLower.c_str());
   m_completionData->trie.build(m_completionData->keyset);
-  const auto it = m_completionData->originalStrings.find(candidateLower);
-  if (it == m_completionData->originalStrings.end()) {
+  if (const auto it = m_completionData->originalStrings.find(candidateLower);
+      it == m_completionData->originalStrings.end()) {
     m_completionData->originalStrings.emplace(candidateLower,
                                               std::unordered_set{candidate});
   } else {
@@ -124,9 +123,9 @@ void Autocomplete::Completer::addCandidate(const std::string &candidate) {
 }
 
 void Autocomplete::exportCompletionData() const {
-  for (const auto &completionSource : m_completionData) {
-    exportCompletionToFile(completionSource.first,
-                           completionSource.second->originalStrings);
+  for (const auto &[completionSourceName, completionData] : m_completionData) {
+    exportCompletionToFile(completionSourceName,
+                           completionData->originalStrings);
   }
 }
 } // namespace NfoEditor

@@ -28,9 +28,9 @@ public:
         : m_completionData{std::move(completionData)} {}
 
     [[nodiscard]] std::vector<std::string>
-    complete(std::string_view prefix) const;
+    complete(const std::string &prefix) const;
 
-    void addCandidate(const std::string &candidate);
+    void addCandidate(const std::string &candidate) const;
 
   private:
     std::shared_ptr<CompletionData> m_completionData;
@@ -45,6 +45,7 @@ public:
   void exportCompletionData() const;
 
 private:
+  // Map from completion source name to the corresponding completion data
   std::unordered_map<std::string, std::shared_ptr<CompletionData>>
       m_completionData;
 

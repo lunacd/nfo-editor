@@ -9,18 +9,16 @@
 namespace NfoEditor {
 namespace {
 std::filesystem::path getUserDataDir() {
-  if (const auto xdgDataHome = NfoEditor::getEnv("XDG_DATA_HOME");
-      !xdgDataHome.empty()) {
+  if (const auto xdgDataHome = getEnv("XDG_DATA_HOME"); !xdgDataHome.empty()) {
     return xdgDataHome;
   }
-  return std::filesystem::path(NfoEditor::getEnv("HOME")) / ".local" / "share";
+  return std::filesystem::path(getEnv("HOME")) / ".local" / "share";
 }
 } // namespace
 
 std::string getEnv(const std::string &name) {
   static std::mutex mutex;
   std::lock_guard<std::mutex> lock{mutex};
-  // NOLINTNEXTLINE(concurrency-mt-unsafe)
   const char *value = std::getenv(name.c_str());
   return value != nullptr ? value : std::string{};
 }
@@ -30,23 +28,25 @@ std::filesystem::path getNfoEditorDataDir() {
 }
 
 std::string_view trim(std::string_view input) {
-  const auto isNotSpace = [](unsigned char ch) {
+  const auto isNotSpace = [](const unsigned char ch) {
     return std::isspace(ch) == 0;
   };
-  const size_t prefixLength = std::distance(
-      input.cbegin(), std::find_if(input.cbegin(), input.cend(), isNotSpace));
+  const auto firstNonSpacesChar = std::ranges::find_if(input, isNotSpace);
+  const size_t prefixLength = std::distance(input.begin(), firstNonSpacesChar);
   input.remove_prefix(prefixLength);
-  const size_t suffixLength =
-      std::distance(input.crbegin(),
-                    std::find_if(input.crbegin(), input.crend(), isNotSpace));
+
+  const auto lastNonSpaceChar =
+      std::find_if(input.rbegin(), input.rend(), isNotSpace);
+  const size_t suffixLength = std::distance(input.rbegin(), lastNonSpaceChar);
   input.remove_suffix(suffixLength);
   return input;
 }
 
 std::string toLower(std::string_view input) {
   std::string result;
-  std::transform(input.begin(), input.end(), std::back_inserter(result),
-                 [](unsigned char ch) { return std::tolower(ch); });
+  std::ranges::transform(
+      input, std::back_inserter(result),
+      [](const unsigned char ch) { return std::tolower(ch); });
   return result;
 }
 

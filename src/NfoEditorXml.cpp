@@ -31,6 +31,8 @@ void NfoData::saveToFile(const std::filesystem::path &path) const {
   auto pathToSave = path;
   pathToSave.replace_extension("nfo");
 
-  doc.save_file(pathToSave.c_str());
+  if (!doc.save_file(pathToSave.c_str())) {
+    throw std::runtime_error("Could not save file");
+  }
 }
 } // namespace NfoEditor

@@ -14,9 +14,9 @@ public:
                                           const QString &prefix);
   Q_INVOKABLE void addCompletionCandidate(const QString &completionSource,
                                           const QString &candidate);
-  Q_INVOKABLE void exportCompletionData();
-  Q_INVOKABLE static void saveToXml(const QUrl &filePath,
-                                    const QString &title, const QString &studio,
+  Q_INVOKABLE void exportCompletionData() const;
+  Q_INVOKABLE static void saveToXml(const QUrl &filePath, const QString &title,
+                                    const QString &studio,
                                     const QList<QString> &actors,
                                     const QList<QString> &tags);
 

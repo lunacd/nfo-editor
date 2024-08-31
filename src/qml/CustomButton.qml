@@ -44,12 +44,12 @@ Item {
             width: internal.itemSize
             height: internal.itemSize
             Layout.alignment: Qt.AlignVCenter
-            visible: this.source.toString() !== ""
+            visible: source.toString() !== ""
         }
 
         Text {
             id: text
-            visible: this.text !== ""
+            visible: text !== ""
         }
 
         Rectangle {

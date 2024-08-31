@@ -31,11 +31,11 @@ QList<QString> QtBridge::autocomplete(const QString &completionSource,
 
 void QtBridge::addCompletionCandidate(const QString &completionSource,
                                       const QString &candidate) {
-  auto completer = m_autocomplete.getCompleter(completionSource.toStdString());
+  const auto completer = m_autocomplete.getCompleter(completionSource.toStdString());
   completer.addCandidate(candidate.toStdString());
 }
 
-void QtBridge::exportCompletionData() { m_autocomplete.exportCompletionData(); }
+void QtBridge::exportCompletionData() const { m_autocomplete.exportCompletionData(); }
 
 void QtBridge::saveToXml(const QUrl &filePath, const QString &title,
                          const QString &studio, const QList<QString> &actors,
@@ -48,12 +48,11 @@ void QtBridge::saveToXml(const QUrl &filePath, const QString &title,
   stdActors.reserve(actors.size());
   std::vector<std::string> stdTags;
   stdTags.reserve(tags.size());
-  std::transform(actors.begin(), actors.end(), std::back_inserter(stdActors),
-                 qStringToStd);
-  std::transform(tags.begin(), tags.end(), std::back_inserter(stdTags),
-                 qStringToStd);
+  std::ranges::transform(actors, std::back_inserter(stdActors), qStringToStd);
+  std::ranges::transform(tags, std::back_inserter(stdTags), qStringToStd);
 
-  NfoData data{title.toStdString(), studio.toStdString(), stdActors, stdTags};
+  const NfoData data{title.toStdString(), studio.toStdString(), stdActors,
+                     stdTags};
   data.saveToFile(filePath.path().toStdString());
 }
 } // namespace NfoEditor
